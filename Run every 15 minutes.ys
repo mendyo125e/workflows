@@ -1,0 +1,26 @@
+name: Run every 15 minutes
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"  # Chạy mỗi 15 phút
+
+jobs:
+  check_website:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if the website is up
+        id: website_check
+        run: |
+          # Kiểm tra trang web với curl và lưu mã trạng thái HTTP
+          HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://dockerfastapi.onrender.com/)
+
+          # Nếu trạng thái HTTP là 200 (OK), tiếp tục thực hiện hành động
+          if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "Website is up, proceeding with the task."
+            # Thực hiện hành động ở đây, ví dụ: Gửi email, thực thi script, v.v.
+            # Ví dụ: curl -X POST http://example.com/perform-task
+          else
+            echo "Website is down or unreachable. Skipping the task."
+            exit 1  # Dừng tiến trình nếu không có phản hồi hợp lệ từ website
+          fi
