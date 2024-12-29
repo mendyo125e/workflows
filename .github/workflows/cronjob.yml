@@ -13,7 +13,7 @@ jobs:
         id: website_check
         run: |
           # Kiểm tra trang web với curl và lưu mã trạng thái HTTP
-          HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://dockerfastapi.onrender.com/)
+          HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://dockerfastapi.onrender.com/items/125?q=1&page=github.com)
 
           # Nếu trạng thái HTTP là 200 (OK), tiếp tục thực hiện hành động
           if [ "$HTTP_STATUS" -eq 200 ]; then
